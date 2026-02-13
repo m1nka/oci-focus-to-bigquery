@@ -2,18 +2,13 @@
 
 Organizations run workloads on both Google Cloud and Oracle Cloud Infrastructure — whether through Oracle Interconnect for Google Cloud, Oracle Database@GCP, or simply using both platforms. 
 
-Multi-cloud usually means multiple billing formats, portals, and reports. Comparing costs across GCP and OCI shouldn't require spreadsheets and manual work.
+Multi-cloud usually means multiple billing formats, portals, and reports. Comparing costs across GCP and OCI shouldn't require spreadsheets and manual work. This tool is a simple Google Cloud Run function that brings your cost data together into a common format.
 
-This tool brings your cost data together into a common format. Runs on ![Cloud Run](https://img.shields.io/badge/Cloud%20Run-4285F4?logo=google-cloud&logoColor=white) and ![BigQuery](https://img.shields.io/badge/BigQuery-669DF6?logo=googlebigquery&logoColor=white).
+- 🔄 **Syncs** OCI FOCUS billing reports to Google Cloud Storage using Cloud Run
+- 🗂️ **Transforms** flat files into Hive-partitioned format for fast queries
+- 📊 **Enables** OCI and GCP cost data in a compatible schema, to use with any BI tool
 
----
-
-### What it does
-
-- **Syncs** OCI FOCUS billing reports to Google Cloud Storage
-- **Transforms** flat files into Hive-partitioned format for fast queries
-- **Unifies** OCI and GCP cost data in BigQuery with a compatible schema
-- **Enables** single-pane dashboards in Looker Studio, Grafana, or any BI tool
+<br>
 
 ![Architecture](diagram/oci-focus-to-gcp-Summary.png)
 
@@ -22,6 +17,8 @@ This tool brings your cost data together into a common format. Runs on ![Cloud R
 Both clouds now support [FOCUS](https://focus.finops.org/) (FinOps Open Cost & Usage Specification). This tool syncs OCI's FOCUS exports into BigQuery with a schema that matches GCP's — so you can query, compare, and visualize all your cloud costs in one place.
 
 > **More info:** [Oracle Cloud - FOCUS Support Announcement](https://blogs.oracle.com/cloud-infrastructure/announcing-focus-support-for-oci-cost-reports) · [Google Cloud - FOCUS Support Announcement](https://cloud.google.com/blog/topics/cost-management/cloud-costs-come-into-view-with-focus-v1-0-ga)
+
+Runs on ![Cloud Run](https://img.shields.io/badge/Cloud%20Run-4285F4?logo=google-cloud&logoColor=white) and ![BigQuery](https://img.shields.io/badge/BigQuery-669DF6?logo=googlebigquery&logoColor=white).
 
 ## Prerequisites
 
