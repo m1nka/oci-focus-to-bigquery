@@ -8,8 +8,6 @@ Multi-cloud usually means multiple billing formats, portals, and reports. Compar
 - 🗂️ **Transforms** flat files into Hive-partitioned format for fast queries
 - 📊 **Enables** OCI and GCP cost data in a compatible schema, to use with any BI tool
 
-<br>
-
 ![Architecture](diagram/oci-focus-to-gcp-Summary.png)
 
 ### How it works
