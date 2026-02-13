@@ -1,4 +1,4 @@
-# Multi-Cloud Cost Analytics with FOCUS
+# Multi-Cloud Cost Analytics with BigQuery
 
 Organizations run workloads on both Google Cloud and Oracle Cloud Infrastructure — whether through Oracle Interconnect for Google Cloud, Oracle Database@GCP, or simply using both platforms. 
 
