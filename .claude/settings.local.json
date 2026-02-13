@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(bun install:*)",
+      "Bash(bun run typecheck:*)",
+      "Bash(rclone lsf:*)",
+      "Bash(bq query:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}

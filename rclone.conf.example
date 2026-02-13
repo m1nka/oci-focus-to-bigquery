@@ -1,0 +1,16 @@
+[oci-config]
+type = s3
+provider = Other
+env_auth = false
+access_key_id = YOUR_OCI_ACCESS_KEY_ID
+secret_access_key = YOUR_OCI_SECRET_ACCESS_KEY
+region = eu-frankfurt-1
+endpoint = https://bling.compat.objectstorage.eu-frankfurt-1.oci.customer-oci.com
+
+[gcs-config]
+type = google cloud storage
+project_number = YOUR_PROJECT_NUMBER
+service_account_file = /path/to/service-account-key.json
+location = europe-west3
+storage_class = STANDARD
+bucket_policy_only = true

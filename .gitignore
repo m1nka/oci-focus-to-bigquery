@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Rclone config (contains credentials)
+rclone.conf
+
+# Build output
+dist/
+
+# Bun
+bun.lockb
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Draw.io backup/lock files
+.$*
+*.bkp
+
+# Logs
+*.log
+
+# GCS service account keys (do not commit)
+*-key.json
+*.pem
