@@ -57,16 +57,18 @@ cp rclone.conf.example rclone.conf
 cp .env.example .env
 # Edit .env with your settings
 
-# 3. Build and run
+# 3. Build and run (Docker)
 docker build -t oci-focus-sync .
 docker run --env-file .env \
   -v $(pwd)/rclone.conf:/app/rclone.conf:ro \
   -v $GOOGLE_APPLICATION_CREDENTIALS:/app/gcp-key.json:ro \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json \
   oci-focus-sync
-```
 
-## Configuration
+# Or run directly with Bun (requires rclone installed locally)
+bun install
+bun run src/index.ts
+```
 
 ### Environment Variables
 
@@ -86,6 +88,31 @@ docker run --env-file .env \
 See `rclone.conf.example` for the required remotes:
 - `oci-usage-reports-config` — OCI Object Storage (S3-compatible)
 - `gcs-config` — Google Cloud Storage
+
+## Automated Deployment (using Google Cloud Run)
+
+For production, deploy as a scheduled Cloud Run job. GCP credentials are picked up automatically from the Cloud Run service account — `GOOGLE_APPLICATION_CREDENTIALS` is not needed.
+
+> **Note:** The Dockerfile bakes `rclone.conf` into the image for simplicity. For production, consider storing it in [Secret Manager](https://cloud.google.com/run/docs/configuring/services/secrets) and mounting it as a volume instead.
+
+```bash
+# Build and push to Artifact Registry
+gcloud builds submit --tag gcr.io/PROJECT_ID/oci-focus-sync
+
+# Create Cloud Run job
+gcloud run jobs create oci-focus-sync \
+  --image gcr.io/PROJECT_ID/oci-focus-sync \
+  --set-env-vars "OCI_TENANCY_OCID=ocid1.tenancy...,GCS_STAGING_BUCKET=...,GCS_HIVE_BUCKET=...,GCS_PROJECT_ID=...,SYNC_MODE=incremental,DRY_RUN=false" \
+  --region europe-west1
+
+# Schedule daily execution
+gcloud scheduler jobs create http oci-focus-sync-daily \
+  --location europe-west1 \
+  --schedule "0 6 * * *" \
+  --uri "https://europe-west1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/PROJECT_ID/jobs/oci-focus-sync:run" \
+  --http-method POST \
+  --oauth-service-account-email PROJECT_NUMBER-compute@developer.gserviceaccount.com
+```
 
 ## BigQuery External Table
 
@@ -166,29 +193,4 @@ SELECT ProviderName, ServiceName, SUM(BilledCost) as total_cost
 FROM `DATASET.unified_focus`
 GROUP BY 1, 2
 ORDER BY total_cost DESC
-```
-
-## Automated deployment (using Google Cloud Run)
-
-For production, deploy as a scheduled Cloud Run job. GCP credentials are picked up automatically from the Cloud Run service account — `GOOGLE_APPLICATION_CREDENTIALS` is not needed.
-
-> **Note:** The Dockerfile bakes `rclone.conf` into the image for simplicity. For production, consider storing it in [Secret Manager](https://cloud.google.com/run/docs/configuring/services/secrets) and mounting it as a volume instead.
-
-```bash
-# Build and push to Artifact Registry
-gcloud builds submit --tag gcr.io/PROJECT_ID/oci-focus-sync
-
-# Create Cloud Run job
-gcloud run jobs create oci-focus-sync \
-  --image gcr.io/PROJECT_ID/oci-focus-sync \
-  --set-env-vars "OCI_TENANCY_OCID=ocid1.tenancy...,GCS_STAGING_BUCKET=...,GCS_HIVE_BUCKET=...,GCS_PROJECT_ID=...,SYNC_MODE=incremental,DRY_RUN=false" \
-  --region europe-west1
-
-# Schedule daily execution
-gcloud scheduler jobs create http oci-focus-sync-daily \
-  --location europe-west1 \
-  --schedule "0 6 * * *" \
-  --uri "https://europe-west1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/PROJECT_ID/jobs/oci-focus-sync:run" \
-  --http-method POST \
-  --oauth-service-account-email PROJECT_NUMBER-compute@developer.gserviceaccount.com
 ```
