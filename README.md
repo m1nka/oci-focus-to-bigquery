@@ -6,10 +6,6 @@ Multi-cloud usually means multiple billing formats, portals, and reports. Compar
 
 This tool brings your cost data together into a common format. Runs on ![Cloud Run](https://img.shields.io/badge/Cloud%20Run-4285F4?logo=google-cloud&logoColor=white) and ![BigQuery](https://img.shields.io/badge/BigQuery-669DF6?logo=googlebigquery&logoColor=white).
 
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white) 
-![Bun](https://img.shields.io/badge/Bun-000000?logo=bun&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-
 ---
 
 ### What it does
@@ -26,7 +22,6 @@ This tool brings your cost data together into a common format. Runs on ![Cloud R
 Both clouds now support [FOCUS](https://focus.finops.org/) (FinOps Open Cost & Usage Specification). This tool syncs OCI's FOCUS exports into BigQuery with a schema that matches GCP's — so you can query, compare, and visualize all your cloud costs in one place.
 
 > **More info:** [Oracle Cloud - FOCUS Support Announcement](https://blogs.oracle.com/cloud-infrastructure/announcing-focus-support-for-oci-cost-reports) · [Google Cloud - FOCUS Support Announcement](https://cloud.google.com/blog/topics/cost-management/cloud-costs-come-into-view-with-focus-v1-0-ga)
-
 
 ## Prerequisites
 
